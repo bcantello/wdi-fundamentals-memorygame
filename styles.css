@@ -29,10 +29,11 @@ h1 {
 h2 {
     font-weight: 600;
     font-size: 20px;
+    padding-bottom: 20px;
 }
 
 p {
-    font-family: "Droid Serif", serif;
+    font-family: 'Droid Serif', serif;
     line-height: 26px;
     font-size: 18px;
     margin: 0 auto;
@@ -49,7 +50,7 @@ nav {
     padding: 20px 0;
 }
 
-.nav {
+nav a {
     font-family: Raleway, sans-serif;
     color: #FFFFFF;
     letter-spacing: 1px;
@@ -58,9 +59,14 @@ nav {
 }
 
 a {
+    border-bottom: 2px solid transparent;
     text-decoration: none;
     text-transform: uppercase;
     padding: 20px;
+}
+
+a:hover {
+    background-color: #0D2C40;
 }
 
 #wrapper {
@@ -69,10 +75,35 @@ a {
 
 footer {
     font-family: Raleway, sans-serif;
-    position: absolute;
-    bottom: 0;
-    padding: 10px 0;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #FFFFFF;
+    background-color: #0D2C40;
+    font-weight: 500;
+    padding: 0 20px;
     font-size: 12px;
     width: 100%;
-    text-align: center;
+    box-sizing: border-box;
+}
+
+.copyright {
+    float: left;
+}
+
+.message {
+    float: right;
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    content: " ";
+    clear: both;
+    height: 0;
+    font-size: 0;
+}
+
+.name {
+    color: #F15B31;
+    font-weight: 700;
 }
