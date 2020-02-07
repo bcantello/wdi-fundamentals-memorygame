@@ -23,6 +23,11 @@ let cards = [
 
 let cardsInPlay = [];
 let randomOrder = [];
+let totalMatches = 0;
+let totalAttempts = 0;
+let matchStreak = 0;
+let score = 0;
+let matchRate = 0 + "\%";
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -52,10 +57,21 @@ function createBoard() {
 
 function checkForMatch() {
     if (cardsInPlay[0] === cardsInPlay[1]) {
-        responseMessage("You found a match! Can you find two in a row? Click the Reset Game button to try!");
+        totalMatches++;
+        totalAttempts++;
+        matchStreak++;
+        score += (5 + matchStreak * 5);
+        matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
+        updateTable();
+        responseMessage("response-message", "You found a match! Can you find " + (matchStreak + 1) + " in a row? " +
+            "Click the Reset Game button to try!");
         createResetButton(resetAfterWin);
     } else {
-        responseMessage("Shoot! You did not find a match. Click the Reset Game button to try again!");
+        totalAttempts++;
+        matchStreak = 0;
+        matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
+        updateTable();
+        responseMessage("response-message", "Shoot! You did not find a match. Click the Reset Game button to try again!");
         createResetButton(resetAfterLoss);
     }
 }
@@ -66,17 +82,24 @@ function flipCard() {
     if (cardsInPlay.length < 3) {
         this.setAttribute('src', cards[cardId].cardImage);
         if (cardsInPlay.length === 1) {
-            responseMessage("You found a " + cards[cardId].rank + "! Can you find the other one?")
+            responseMessage("response-message", "You found a " + cards[cardId].rank + "! Can you find the other one?")
         } else if (cardsInPlay.length === 2) {
             checkForMatch();
         }
     } else {
-        responseMessage("No Cheating ;)");
+        responseMessage("response-message", "No Cheating ;)");
     }
 }
 
-function responseMessage(message) {
-    document.getElementById('response-message').innerHTML = message;
+function responseMessage(tagId, value) {
+    document.getElementById(tagId).innerHTML = value;
+}
+
+function updateTable() {
+    responseMessage("totalMatches", totalMatches);
+    responseMessage("matchStreak", matchStreak);
+    responseMessage("score", score);
+    responseMessage("matchRate", matchRate);
 }
 
 function createResetButton(theFunction) {

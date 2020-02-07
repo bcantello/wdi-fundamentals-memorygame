@@ -59,7 +59,7 @@ nav a {
 }
 
 .score {
-    width: 400px;
+    width: 600px;
     margin: auto;
 }
 
@@ -75,7 +75,7 @@ nav a {
 
 .score td {
     font-size: 20px;
-    padding: 0 20px;
+    padding: 0 25px;
 }
 
 button {
