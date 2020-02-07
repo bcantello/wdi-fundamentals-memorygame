@@ -58,6 +58,26 @@ nav a {
     font-size: 18px;
 }
 
+.score {
+    width: 400px;
+    margin: auto;
+}
+
+.score table {
+    margin: 5px auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.score th, .score td {
+    text-align: center;
+}
+
+.score td {
+    font-size: 20px;
+    padding: 0 20px;
+}
+
 button {
     font-family: 'Droid Serif', serif;
     width: 150px;
