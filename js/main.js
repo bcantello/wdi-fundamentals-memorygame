@@ -22,24 +22,81 @@ let cards = [
 ];
 
 let cardsInPlay = [];
+let randomOrder = [];
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+function generateRandomCardOrder() {
+    while (randomOrder.length < cards.length) {
+        let randomInt = getRandomInt(4);
+        if (randomOrder.includes(randomInt) !== true) {
+            randomOrder.push(randomInt);
+        }
+    }
+}
+
+function createBoard() {
+    for (let i = 0; i < randomOrder.length; i++) {
+        let cardElement = document.createElement('img');
+        cardElement.setAttribute('src', 'images/back.png');
+        cardElement.setAttribute('data-id', randomOrder[i]);
+        cardElement.addEventListener('click', flipCard);
+        document.getElementById('game-board').appendChild(cardElement);
+    }
+}
+
+/*Reset button is not currently working correctly. It works fine the first time, however it seems to get
+* stuck in one configuration after it's initial use.*/
 
 function checkForMatch() {
     if (cardsInPlay[0] === cardsInPlay[1]) {
-        alert("You found a match!");
+        responseMessage("You found a match! Can you find two in a row? Click the Reset Game button to try!");
+        createResetButton(resetAfterWin);
     } else {
-        alert("Your cards did not match. Try again.");
+        responseMessage("Shoot! You did not find a match. Click the Reset Game button to try again!");
+        createResetButton(resetAfterLoss);
     }
 }
 
-function flipCard(cardId) {
-    console.log("User flipped " + cards[cardId].rank);
+function flipCard() {
+    let cardId = this.getAttribute('data-id');
     cardsInPlay.push(cards[cardId].rank);
-    if (cardsInPlay.length === 2) {
-        checkForMatch();
+    if (cardsInPlay.length < 3) {
+        this.setAttribute('src', cards[cardId].cardImage);
+        if (cardsInPlay.length === 1) {
+            responseMessage("You found a " + cards[cardId].rank + "! Can you find the other one?")
+        } else if (cardsInPlay.length === 2) {
+            checkForMatch();
+        }
     } else {
-        alert("Flip another card.")
+        responseMessage("No Cheating ;)");
     }
 }
 
-flipCard(0);
-flipCard(1);
+function responseMessage(message) {
+    document.getElementById('response-message').innerHTML = message;
+}
+
+function createResetButton(theFunction) {
+    let resetButton = document.getElementById('reset-button');
+    resetButton.addEventListener('click', theFunction);
+}
+
+function resetAfterWin() {
+    document.getElementById('game-board').innerHTML = "";
+    cardsInPlay = [];
+    randomOrder = [];
+    generateRandomCardOrder();
+    createBoard();
+}
+
+function resetAfterLoss() {
+    document.getElementById('game-board').innerHTML = "";
+    cardsInPlay = [];
+    createBoard();
+}
+
+generateRandomCardOrder();
+createBoard();
