@@ -62,6 +62,7 @@ function checkForMatch() {
         matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
         matchState = true;
         updateTable();
+        specialSurprise();
         responseMessage("response-message", "You found a match! Can you find " + (matchStreak + 1) + " in a row? " +
             "Click the Reset Game button to try!");
         setResetButton();
@@ -125,3 +126,19 @@ function resetGame() {
 
 generateRandomCardOrder();
 createBoard();
+
+let surprise = document.getElementsByClassName('surprise-container')[0];
+let surpriseSound = new Audio("audio/surprise.wav");
+
+function specialSurprise() {
+    if (totalMatches === 3) {
+        surpriseSound.load();
+        surpriseSound.play();
+        setTimeout(function () {
+            surprise.style.visibility = "visible";
+        }, 500);
+        setTimeout(function () {
+            surprise.style.visibility = "hidden";
+        }, 4000);
+    }
+}

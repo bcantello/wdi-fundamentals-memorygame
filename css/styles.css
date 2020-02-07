@@ -44,6 +44,22 @@ img {
     margin: 40px 8px;
 }
 
+.surprise-container {
+    width: 100%;
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    visibility: hidden;
+}
+
+.surprise {
+    z-index: 10;
+    display: block;
+    width: max-content;
+    position: relative;
+    margin: auto;
+}
+
 nav {
     background-color: #00A6B3;
     color: #FFFFFF;
