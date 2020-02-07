@@ -52,13 +52,11 @@ function createBoard() {
 
 function checkForMatch() {
     if (cardsInPlay[0] === cardsInPlay[1]) {
-        responseMessage("You found a match!");
-        let resetButton = document.getElementById('reset-button');
-        resetButton.addEventListener('click', resetAfterWin);
+        responseMessage("You found a match! Can you find two in a row? Click the Reset Game button to try!");
+        createResetButton(resetAfterWin);
     } else {
-        responseMessage("Shoot! You did not find a match. Try again!");
-        let resetButton = document.getElementById('reset-button');
-        resetButton.addEventListener('click', resetAfterLoss);
+        responseMessage("Shoot! You did not find a match. Click the Reset Game button to try again!");
+        createResetButton(resetAfterLoss);
     }
 }
 
@@ -79,6 +77,11 @@ function flipCard() {
 
 function responseMessage(message) {
     document.getElementById('response-message').innerHTML = message;
+}
+
+function createResetButton(theFunction) {
+    let resetButton = document.getElementById('reset-button');
+    resetButton.addEventListener('click', theFunction);
 }
 
 function resetAfterWin() {
