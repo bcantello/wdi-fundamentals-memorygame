@@ -35,7 +35,7 @@ function getRandomInt(max) {
 
 function generateRandomCardOrder() {
     while (randomOrder.length < cards.length) {
-        let randomInt = getRandomInt(4);
+        let randomInt = getRandomInt(cards.length);
         if (randomOrder.includes(randomInt) !== true) {
             randomOrder.push(randomInt);
         }
@@ -51,9 +51,6 @@ function createBoard() {
         document.getElementById('game-board').appendChild(cardElement);
     }
 }
-
-/*Reset button is not currently working correctly. It works fine the first time, however it seems to get
-* stuck in one configuration after it's initial use.*/
 
 function checkForMatch() {
     if (cardsInPlay[0] === cardsInPlay[1]) {
@@ -71,7 +68,8 @@ function checkForMatch() {
         matchStreak = 0;
         matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
         updateTable();
-        responseMessage("response-message", "Shoot! You did not find a match. Click the Reset Game button to try again!");
+        responseMessage("response-message", "Shoot! You did not find a match. " +
+            "Click the Reset Game button to try again!");
         createResetButton(resetAfterLoss);
     }
 }
@@ -83,6 +81,8 @@ function flipCard() {
         this.setAttribute('src', cards[cardId].cardImage);
         if (cardsInPlay.length === 1) {
             responseMessage("response-message", "You found a " + cards[cardId].rank + "! Can you find the other one?")
+            document.getElementById('reset-button').removeEventListener('click', resetAfterWin);
+            document.getElementById('reset-button').removeEventListener('click', resetAfterLoss);
         } else if (cardsInPlay.length === 2) {
             checkForMatch();
         }
