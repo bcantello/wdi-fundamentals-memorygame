@@ -28,6 +28,7 @@ let totalAttempts = 0;
 let matchStreak = 0;
 let score = 0;
 let matchRate = 0 + "\%";
+let matchState = null;
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -59,18 +60,20 @@ function checkForMatch() {
         matchStreak++;
         score += (5 + matchStreak * 5);
         matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
+        matchState = true;
         updateTable();
         responseMessage("response-message", "You found a match! Can you find " + (matchStreak + 1) + " in a row? " +
             "Click the Reset Game button to try!");
-        createResetButton(resetAfterWin);
+        setResetButton();
     } else {
         totalAttempts++;
         matchStreak = 0;
         matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
+        matchState = false;
         updateTable();
         responseMessage("response-message", "Shoot! You did not find a match. " +
             "Click the Reset Game button to try again!");
-        createResetButton(resetAfterLoss);
+        setResetButton();
     }
 }
 
@@ -81,8 +84,6 @@ function flipCard() {
         this.setAttribute('src', cards[cardId].cardImage);
         if (cardsInPlay.length === 1) {
             responseMessage("response-message", "You found a " + cards[cardId].rank + "! Can you find the other one?")
-            document.getElementById('reset-button').removeEventListener('click', resetAfterWin);
-            document.getElementById('reset-button').removeEventListener('click', resetAfterLoss);
         } else if (cardsInPlay.length === 2) {
             checkForMatch();
         }
@@ -102,23 +103,24 @@ function updateTable() {
     responseMessage("matchRate", matchRate);
 }
 
-function createResetButton(theFunction) {
+function setResetButton() {
     let resetButton = document.getElementById('reset-button');
-    resetButton.addEventListener('click', theFunction);
+    resetButton.addEventListener('click', resetGame);
 }
 
-function resetAfterWin() {
-    document.getElementById('game-board').innerHTML = "";
-    cardsInPlay = [];
-    randomOrder = [];
-    generateRandomCardOrder();
-    createBoard();
-}
-
-function resetAfterLoss() {
-    document.getElementById('game-board').innerHTML = "";
-    cardsInPlay = [];
-    createBoard();
+function resetGame() {
+    if (matchState === true) {
+        document.getElementById('game-board').innerHTML = "";
+        cardsInPlay = [];
+        randomOrder = [];
+        generateRandomCardOrder();
+        createBoard();
+    } else {
+        document.getElementById('game-board').innerHTML = "";
+        cardsInPlay = [];
+        createBoard();
+    }
+    responseMessage("response-message", "Good Luck!");
 }
 
 generateRandomCardOrder();
