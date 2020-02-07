@@ -46,7 +46,10 @@ img {
 
 .surprise-container {
     width: 100%;
+    height: 100%;
     position: absolute;
+    left: 0;
+    bottom: 0;
     margin: 0 auto;
     text-align: center;
     visibility: hidden;
@@ -55,8 +58,12 @@ img {
 .surprise {
     z-index: 10;
     display: block;
-    width: max-content;
-    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     margin: auto;
 }
 
