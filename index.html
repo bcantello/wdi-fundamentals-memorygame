@@ -16,7 +16,7 @@
             </header>
             <nav>
                 <a href="#instructions">instructions</a>
-                <a href="#game">game</a>
+                <a href="#game-board">game</a>
             </nav>
             <main>
                 <h2>What is the Memory Game?</h2>
@@ -24,17 +24,36 @@
                     is a card game in which all of the cards are laid face down on a surface and two cards are flipped
                     face up over each turn. The object of the game is to turn over pairs of matching cards.</p>
                 <h2 id="instructions">Instructions</h2>
-                <p>Select a card to flip. Can you find its match?</p>
-                <div id="game">
-                    <img src="images/back.png" alt="Queen of Diamonds" title="card back">
-                    <img src="images/back.png" alt="Queen of Hearts" title="card back">
-                    <img src="images/back.png" alt="King of Diamonds" title="card back">
-                    <img src="images/back.png" alt="King of Hearts" title="card back">
+                <p>Select a card to flip. Can you find its match? How many tries does it take you to find 5 matches?
+                    Try to find multiple matches in a row to increase your win streak! Win streaks add a multiplier to
+                    your point score for each match.</p>
+                <div class = "score">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td id = "totalMatches">0</td>
+                            <td id = "matchStreak">0</td>
+                            <td id = "score">0</td>
+                            <td id = "matchRate">0%</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Total Matches</th>
+                            <th>Match Streak</th>
+                            <th>Score</th>
+                            <th>Match Rate</th>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
+                <div id="game-board" class="board clearfix"></div>
+                <p id="response-message">Good luck!</p>
+                <div><button id="reset-button">Reset Game</button></div>
             </main>
             <footer class="clearfix">
                 <p class="copyright">Copyright 2020</p>
-                <p class="message">Created with &hearts; by <span class="name">GA</span></p>
+                <p class="message">Created by <span class="name">Brandon Cantello</span></p>
             </footer>
         </div>
         <script src="js/main.js"></script>
