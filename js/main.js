@@ -46,7 +46,7 @@ function generateRandomCardOrder() {
 function createBoard() {
     for (let i = 0; i < randomOrder.length; i++) {
         let cardElement = document.createElement('img');
-        cardElement.setAttribute('src', 'images/back.png');
+        cardElement.setAttribute('src', 'images/cardBack.png');
         cardElement.setAttribute('data-id', randomOrder[i]);
         cardElement.addEventListener('click', flipCard);
         document.getElementById('game-board').appendChild(cardElement);
@@ -126,7 +126,7 @@ generateRandomCardOrder();
 createBoard();
 
 let surprise = document.getElementsByClassName('surprise-container')[0];
-let surpriseSound = new Audio("audio/surprise.wav");
+let surpriseSound = new Audio("audio/surpriseAudio.wav");
 
 function specialSurprise() {
     if (totalMatches === 3) {
