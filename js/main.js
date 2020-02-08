@@ -63,18 +63,22 @@ function checkForMatch() {
         matchState = true;
         updateTable();
         specialSurprise();
-        responseMessage("response-message", "You found a match! Can you find " + (matchStreak + 1) + " in a row? " +
-            "Click the Reset Game button to try!");
-        setResetButton();
+        responseMessage("response-message", "You found a match! Can you find " +
+            (matchStreak + 1) + " in a row? ");
+        setTimeout(function () {
+            resetGame();
+        }, 2000);
     } else {
         totalAttempts++;
         matchStreak = 0;
         matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
         matchState = false;
         updateTable();
-        responseMessage("response-message", "Shoot! You did not find a match. " +
-            "Click the Reset Game button to try again!");
-        setResetButton();
+        responseMessage("response-message", "Shoot! You didn't find a match. " +
+            "At least you know what some are!");
+        setTimeout(function () {
+            resetGame();
+        }, 2000);
     }
 }
 
@@ -104,11 +108,6 @@ function updateTable() {
     responseMessage("matchRate", matchRate);
 }
 
-function setResetButton() {
-    let resetButton = document.getElementById('reset-button');
-    resetButton.addEventListener('click', resetGame);
-}
-
 function resetGame() {
     if (matchState === true) {
         document.getElementById('game-board').innerHTML = "";
@@ -121,7 +120,6 @@ function resetGame() {
         cardsInPlay = [];
         createBoard();
     }
-    responseMessage("response-message", "Good Luck!");
 }
 
 generateRandomCardOrder();
