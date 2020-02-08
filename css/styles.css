@@ -140,12 +140,8 @@ footer {
     box-sizing: border-box;
 }
 
-.copyright {
-    float: left;
-}
-
 .message {
-    float: right;
+    text-align: center;
 }
 
 .clearfix:after {
