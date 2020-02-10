@@ -56,25 +56,19 @@ function createBoard() {
 function checkForMatch() {
     if (cardsInPlay[0] === cardsInPlay[1]) {
         totalMatches++;
-        totalAttempts++;
         matchStreak++;
         score += (5 + matchStreak * 5);
-        matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
-        matchState = true;
-        updateTable();
+        updateTable(true);
         specialSurprise();
-        responseMessage("response-message", "You found a match! Can you find " +
+        insertMessage("response-message", "You found a match! Can you find " +
             (matchStreak + 1) + " in a row? ");
         setTimeout(function () {
             resetGame();
         }, 2000);
     } else {
-        totalAttempts++;
         matchStreak = 0;
-        matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
-        matchState = false;
-        updateTable();
-        responseMessage("response-message", "Shoot! You didn't find a match. " +
+        updateTable(false);
+        insertMessage("response-message", "Shoot! You didn't find a match. " +
             "At least you know what some are!");
         setTimeout(function () {
             resetGame();
@@ -88,24 +82,27 @@ function flipCard() {
     if (cardsInPlay.length < 3) {
         this.setAttribute('src', cards[cardId].cardImage);
         if (cardsInPlay.length === 1) {
-            responseMessage("response-message", "You found a " + cards[cardId].rank + "! Can you find the other one?")
+            insertMessage("response-message", "You found a " + cards[cardId].rank + "! Can you find the other one?")
         } else if (cardsInPlay.length === 2) {
             checkForMatch();
         }
     } else {
-        responseMessage("response-message", "No Cheating ;)");
+        insertMessage("response-message", "No Cheating ;)");
     }
 }
 
-function responseMessage(tagId, value) {
+function insertMessage(tagId, value) {
     document.getElementById(tagId).innerHTML = value;
 }
 
-function updateTable() {
-    responseMessage("totalMatches", totalMatches);
-    responseMessage("matchStreak", matchStreak);
-    responseMessage("score", score);
-    responseMessage("matchRate", matchRate);
+function updateTable(match) {
+    totalAttempts++;
+    matchState = match;
+    matchRate = (totalMatches / totalAttempts * 100).toFixed(2) + "\%";
+    insertMessage("totalMatches", totalMatches);
+    insertMessage("matchStreak", matchStreak);
+    insertMessage("score", score);
+    insertMessage("matchRate", matchRate);
 }
 
 function resetGame() {
