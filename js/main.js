@@ -18,6 +18,26 @@ let cards = [
         rank: 'king',
         suit: 'diamonds',
         cardImage: 'images/king-of-diamonds.png'
+    },
+    {
+        rank: 'queen',
+        suit: 'hearts',
+        cardImage: 'images/queen-of-hearts.png'
+    },
+    {
+        rank: 'queen',
+        suit: 'diamonds',
+        cardImage: 'images/queen-of-diamonds.png'
+    },
+    {
+        rank: 'king',
+        suit: 'hearts',
+        cardImage: 'images/king-of-hearts.png'
+    },
+    {
+        rank: 'king',
+        suit: 'diamonds',
+        cardImage: 'images/king-of-diamonds.png'
     }
 ];
 
@@ -78,11 +98,12 @@ function checkForMatch() {
 
 function flipCard() {
     let cardId = this.getAttribute('data-id');
-    cardsInPlay.push(cards[cardId].rank);
+    cardsInPlay.push(cards[cardId].rank + " of " + cards[cardId].suit);
     if (cardsInPlay.length < 3) {
         this.setAttribute('src', cards[cardId].cardImage);
         if (cardsInPlay.length === 1) {
-            insertMessage("response-message", "You found a " + cards[cardId].rank + "! Can you find the other one?")
+            insertMessage("response-message", "You found a " + cards[cardId].rank + " of " +
+                cards[cardId].suit + "! Can you find the other one?")
         } else if (cardsInPlay.length === 2) {
             checkForMatch();
         }
@@ -126,7 +147,7 @@ let surprise = document.getElementsByClassName('surprise-container')[0];
 let surpriseSound = new Audio("audio/surpriseAudio.wav");
 
 function specialSurprise() {
-    if (totalMatches === 3) {
+    if (totalMatches === 2) {
         surpriseSound.load();
         surpriseSound.play();
         setTimeout(function () {
