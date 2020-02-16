@@ -67,7 +67,7 @@ function checkForMatch() {
             (matchStreak + 1) + " in a row? ");
         setTimeout(function () {
             resetGame();
-        }, 2000);
+        }, 1500);
     } else {
         totalAttempts++;
         matchStreak = 0;
@@ -78,7 +78,7 @@ function checkForMatch() {
             "At least you know what some are!");
         setTimeout(function () {
             resetGame();
-        }, 2000);
+        }, 1500);
     }
 }
 
