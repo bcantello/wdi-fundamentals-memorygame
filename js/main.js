@@ -102,22 +102,25 @@ function checkForMatch() {
 
 function flipCard() {
     let cardId = this.getAttribute('data-id');
-    this.setAttribute('class', 'flipped');
-    if (cardsInPlay.includes(cards[cardId]) === false) {
-        cardsInPlay.push(cards[cardId]);
-    }
-    if (cardsInPlay.length < 3) {
-        this.setAttribute('src', cards[cardId].cardImage);
-        if (cardsInPlay.length === 1) {
-            insertMessage("response-message", "You found a " + cards[cardId].rank + " of " +
-                cards[cardId].suit + "! Can you find the other one?");
-        } else if (cardsInPlay.length === 2) {
-            checkForMatch();
+    if (this.getAttribute('class') !== 'matched' && this.getAttribute('class') !== 'flipped') {
+        this.setAttribute('class', 'flipped');
+        if (cardsInPlay.includes(cards[cardId]) === false) {
+            cardsInPlay.push(cards[cardId]);
         }
-    } else {
-        insertMessage("response-message", "No Cheating ;)");
+        if (cardsInPlay.length < 3) {
+            this.setAttribute('src', cards[cardId].cardImage);
+            if (cardsInPlay.length === 1) {
+                insertMessage("response-message", "You found a " + cards[cardId].rank + " of " +
+                              cards[cardId].suit + "! Can you find the other one?");
+            } else if (cardsInPlay.length === 2) {
+                checkForMatch();
+            }
+        } else {
+            insertMessage("response-message", "No Cheating ;)");
+        }
     }
 }
+          
 
 function insertMessage(tagId, value) {
     document.getElementById(tagId).innerHTML = value;
