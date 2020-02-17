@@ -58,10 +58,6 @@ let score = 0;
 let matchRate = 0 + "\%";
 let matchState = null;
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
-
 function generateRandomCardOrder() {
     while (randomOrder.length < cards.length) {
         let randomInt = getRandomInt(cards.length);
@@ -92,6 +88,7 @@ function checkForMatch() {
             (matchStreak + 1) + " in a row? ");
         setCardElementClass('matched');
         cardsInPlay = [];
+        displayBoardClearMessage();
     } else {
         matchStreak = 0;
         updateTable(false);
@@ -152,6 +149,13 @@ function setCardElementClass(className) {
     }
 }
 
+function displayBoardClearMessage() {
+    let matchedCards = document.getElementsByClassName('matched');
+    if (matchedCards[7]) {
+        insertMessage('response-message', "Congratulations! You have found all the matches!");
+    }
+}
+
 function resetBoard() {
     document.getElementById('game-board').innerHTML = "";
     cardsInPlay = [];
@@ -163,6 +167,10 @@ function resetBoard() {
 function defineResetButton() {
     let resetButton = document.getElementById('reset-button');
     resetButton.addEventListener('click', resetBoard);
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
 }
 
 generateRandomCardOrder();
