@@ -2,42 +2,50 @@ let cards = [
     {
         rank: 'queen',
         suit: 'hearts',
-        cardImage: 'images/queen-of-hearts.png'
+        cardImage: 'images/queen-of-hearts.png',
+        uniqueIdentifier: 1
     },
     {
         rank: 'queen',
         suit: 'diamonds',
-        cardImage: 'images/queen-of-diamonds.png'
+        cardImage: 'images/queen-of-diamonds.png',
+        uniqueIdentifier: 2
     },
     {
         rank: 'king',
         suit: 'hearts',
-        cardImage: 'images/king-of-hearts.png'
+        cardImage: 'images/king-of-hearts.png',
+        uniqueIdentifier: 3
     },
     {
         rank: 'king',
         suit: 'diamonds',
-        cardImage: 'images/king-of-diamonds.png'
+        cardImage: 'images/king-of-diamonds.png',
+        uniqueIdentifier: 4
     },
     {
         rank: 'queen',
         suit: 'hearts',
-        cardImage: 'images/queen-of-hearts.png'
+        cardImage: 'images/queen-of-hearts.png',
+        uniqueIdentifier: 5
     },
     {
         rank: 'queen',
         suit: 'diamonds',
-        cardImage: 'images/queen-of-diamonds.png'
+        cardImage: 'images/queen-of-diamonds.png',
+        uniqueIdentifier: 6
     },
     {
         rank: 'king',
         suit: 'hearts',
-        cardImage: 'images/king-of-hearts.png'
+        cardImage: 'images/king-of-hearts.png',
+        uniqueIdentifier: 7
     },
     {
         rank: 'king',
         suit: 'diamonds',
-        cardImage: 'images/king-of-diamonds.png'
+        cardImage: 'images/king-of-diamonds.png',
+        uniqueIdentifier: 8
     }
 ];
 
@@ -74,7 +82,7 @@ function createBoard() {
 }
 
 function checkForMatch() {
-    if (cardsInPlay[0] === cardsInPlay[1]) {
+    if (cardsInPlay[0].rank + cardsInPlay[0].suit === cardsInPlay[1].rank + cardsInPlay[1].suit) {
         totalMatches++;
         matchStreak++;
         score += (5 + matchStreak * 5);
@@ -82,9 +90,8 @@ function checkForMatch() {
         specialSurprise();
         insertMessage("response-message", "You found a match! Can you find " +
             (matchStreak + 1) + " in a row? ");
-        setTimeout(function () {
-            resetGame();
-        }, 1500);
+        setCardElementClass('matched');
+        cardsInPlay = [];
     } else {
         matchStreak = 0;
         updateTable(false);
@@ -98,12 +105,15 @@ function checkForMatch() {
 
 function flipCard() {
     let cardId = this.getAttribute('data-id');
-    cardsInPlay.push(cards[cardId].rank + " of " + cards[cardId].suit);
+    this.setAttribute('class', 'flipped');
+    if (cardsInPlay.includes(cards[cardId]) === false) {
+        cardsInPlay.push(cards[cardId]);
+    }
     if (cardsInPlay.length < 3) {
         this.setAttribute('src', cards[cardId].cardImage);
         if (cardsInPlay.length === 1) {
             insertMessage("response-message", "You found a " + cards[cardId].rank + " of " +
-                cards[cardId].suit + "! Can you find the other one?")
+                cards[cardId].suit + "! Can you find the other one?");
         } else if (cardsInPlay.length === 2) {
             checkForMatch();
         }
@@ -127,21 +137,37 @@ function updateTable(match) {
 }
 
 function resetGame() {
-    if (matchState === true) {
-        document.getElementById('game-board').innerHTML = "";
-        cardsInPlay = [];
-        randomOrder = [];
-        generateRandomCardOrder();
-        createBoard();
-    } else {
-        document.getElementById('game-board').innerHTML = "";
-        cardsInPlay = [];
-        createBoard();
+    let flippedCards = document.getElementsByClassName('flipped');
+    for (let i = 1; i >= 0; i--) {
+        flippedCards[i].setAttribute('src', 'images/cardBack.png')
+        flippedCards[i].removeAttribute('class');
     }
+    cardsInPlay = [];
+}
+
+function setCardElementClass(className) {
+    let flippedCards = document.getElementsByClassName('flipped');
+    for (let i = 1; i >= 0; i--) {
+        flippedCards[i].setAttribute('class', className);
+    }
+}
+
+function resetBoard() {
+    document.getElementById('game-board').innerHTML = "";
+    cardsInPlay = [];
+    randomOrder = [];
+    generateRandomCardOrder();
+    createBoard();
+}
+
+function defineResetButton() {
+    let resetButton = document.getElementById('reset-button');
+    resetButton.addEventListener('click', resetBoard);
 }
 
 generateRandomCardOrder();
 createBoard();
+defineResetButton();
 
 let surprise = document.getElementsByClassName('surprise-container')[0];
 let surpriseSound = new Audio("audio/surpriseAudio.wav");

@@ -102,6 +102,17 @@ nav a {
     padding: 0 25px;
 }
 
+button {
+    font-family: 'Droid Serif', serif;
+    width: 150px;
+    font-size: 16px;
+    background: #00A6B3;
+    color: #FFFFFF;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 32px;
+}
+
 a {
     border-bottom: 2px solid transparent;
     text-decoration: none;
