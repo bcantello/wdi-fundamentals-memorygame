@@ -138,7 +138,7 @@ function updateTable(match) {
 function resetGame() {
     let flippedCards = document.getElementsByClassName('flipped');
     for (let i = 1; i >= 0; i--) {
-        flippedCards[i].setAttribute('src', 'images/cardBack.png')
+        flippedCards[i].setAttribute('src', 'images/cardBack.png');
         flippedCards[i].removeAttribute('class');
     }
     cardsInPlay = [];
@@ -155,6 +155,12 @@ function displayBoardClearMessage() {
     let matchedCards = document.getElementsByClassName('matched');
     if (matchedCards[7]) {
         insertMessage('response-message', "Congratulations! You have found all the matches!");
+        let confettiCannon = document.createElement('script');
+        let clapping = new Audio("audio/Clapping.wav");
+        clapping.load();
+        clapping.play();
+        confettiCannon.innerHTML = confetti.start(3000);
+        document.getElementById('winner').appendChild(confettiCannon);
     }
 }
 
