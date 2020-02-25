@@ -96,7 +96,7 @@ function checkForMatch() {
             "At least you know what some are!");
         setTimeout(function () {
             resetGame();
-        }, 1500);
+        }, 1000);
     }
 }
 
