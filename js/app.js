@@ -76,28 +76,14 @@ function createBoard() {
         $cardElement.on('click', flipCard);
         $('#game-board').append($cardElement);
     }
+    defineResetButton();
 }
 
 function checkForMatch() {
     if (cardsInPlay[0].rank + cardsInPlay[0].suit === cardsInPlay[1].rank + cardsInPlay[1].suit) {
-        totalMatches++;
-        matchStreak++;
-        score += (5 + matchStreak * 5);
-        updateTable(true);
-        specialSurprise();
-        insertMessage("response-message", "You found a match! Can you find " +
-            (matchStreak + 1) + " in a row? ");
-        setCardElementClass('matched');
-        cardsInPlay = [];
-        displayBoardClearMessage();
+        matchMade();
     } else {
-        matchStreak = 0;
-        updateTable(false);
-        insertMessage("response-message", "Shoot! You didn't find a match. " +
-            "At least you know what some are!");
-        setTimeout(function () {
-            resetGame();
-        }, 1000);
+        noMatch();
     }
 }
 
@@ -122,8 +108,31 @@ function flipCard() {
     }
 }
 
+function matchMade() {
+    totalMatches++;
+    matchStreak++;
+    score += (5 + matchStreak * 5);
+    updateTable(true);
+    specialSurprise();
+    insertMessage("response-message", "You found a match! Can you find " +
+        (matchStreak + 1) + " in a row? ");
+    setCardElementClass('matched');
+    cardsInPlay = [];
+    displayBoardClearMessage();
+}
+
+function noMatch() {
+    matchStreak = 0;
+    updateTable(false);
+    insertMessage("response-message", "Shoot! You didn't find a match. " +
+        "At least you know what some are!");
+    setTimeout(function () {
+        resetGame();
+    }, 1000);
+}
+
 function insertMessage(tagId, value) {
-    document.getElementById(tagId).innerHTML = value;
+    $(`#${tagId}`).text(`${value}`);
 }
 
 function updateTable(match) {
@@ -166,7 +175,7 @@ function displayBoardClearMessage() {
 }
 
 function resetBoard() {
-    document.getElementById('game-board').innerHTML = "";
+    $('#game-board').empty();
     cardsInPlay = [];
     randomOrder = [];
     generateRandomCardOrder();
@@ -174,8 +183,8 @@ function resetBoard() {
 }
 
 function defineResetButton() {
-    let resetButton = document.getElementById('reset-button');
-    resetButton.addEventListener('click', resetBoard);
+    let $resetButton = $('#reset-button');
+    $resetButton.on('click', resetBoard);
 }
 
 function getRandomInt(max) {
@@ -184,7 +193,6 @@ function getRandomInt(max) {
 
 generateRandomCardOrder();
 createBoard();
-defineResetButton();
 
 let surprise = document.getElementsByClassName('surprise-container')[0];
 let surpriseSound = new Audio("audio/surpriseAudio.wav");
