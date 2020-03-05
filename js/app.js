@@ -69,11 +69,12 @@ function generateRandomCardOrder() {
 
 function createBoard() {
     for (let i = 0; i < randomOrder.length; i++) {
-        let cardElement = document.createElement('img');
-        cardElement.setAttribute('src', 'images/cardBack.png');
-        cardElement.setAttribute('data-id', randomOrder[i]);
-        cardElement.addEventListener('click', flipCard);
-        document.getElementById('game-board').appendChild(cardElement);
+        const $cardElement = $('<img>')
+            .attr('src', 'images/cardBack.png')
+            .attr('data-id', randomOrder[i])
+            .attr('alt', 'card back');
+        $cardElement.on('click', flipCard);
+        $('#game-board').append($cardElement);
     }
 }
 
